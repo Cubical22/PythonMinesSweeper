@@ -6,7 +6,7 @@ from classes.CellButton import CellButton
 from kivy.properties import ObjectProperty
 from generation import *
 
-Window.size = (600,600)
+Window.size = (902, 451)
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()
