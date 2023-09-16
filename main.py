@@ -7,7 +7,7 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from generation import *
 
-from globalVal import LAYOUT_CHANGE_BREAK_POINT
+from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT
 
 Window.size = (902, 451)
 
@@ -35,6 +35,8 @@ class MainLayout(BoxLayout):
             self.massage_label.size_hint = (1,1)
 
 class GridDisplay(GridLayout):
+    lastRatio = None
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = CELLCOUNT
@@ -62,18 +64,34 @@ class GridDisplay(GridLayout):
 
     def update(self, *args):
         ratio = self.parent.parent.width / self.parent.parent.height # the `parent.parent` refers to the main holder
+
+        if self.lastRatio == ratio:
+            return
+
+        self.lastRatio = ratio
+
         if ratio < LAYOUT_CHANGE_BREAK_POINT:
             self.size_hint = (1, None)
             self.height = self.width
 
             self.parent.size_hint = (1, None)
             self.parent.height = self.height
+
+            #making maximum and minimum sizes for the `ScrollView`
+            if self.parent.height < VERTICAL_SCROLL_VIEW_MIN_HEIGHT:
+                self.parent.height = VERTICAL_SCROLL_VIEW_MIN_HEIGHT
+                print("too small")
+            elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
+                self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
+                print("too big")
         else:
             self.size_hint = (None, 1)
             self.width = self.height
 
             self.parent.size_hint = (None, 1)
             self.parent.width = self.width
+
+        print (self.lastRatio, ratio)
 
 class MinesSweeperApp(App):
     def __init__(self, **kwargs):
