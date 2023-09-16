@@ -4,24 +4,28 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from classes.CellButton import CellButton
 from kivy.properties import ObjectProperty
+from kivy.clock import Clock
 from generation import *
+
+from globalVal import LAYOUT_CHANGE_BREAK_POINT
 
 Window.size = (902, 451)
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()
+    Grid = ObjectProperty()
 
     def on_parent(self, *args):
         self.on_size()
 
     def on_size(self, *args):
         ratio = self.width/ self.height
-        if ratio < 0.87:
+        if ratio < LAYOUT_CHANGE_BREAK_POINT:
             self.orientation = "vertical"
         else:
             self.orientation = "horizontal"
 
-        self.update_massage_display(ratio < 0.87)
+        self.update_massage_display(ratio < LAYOUT_CHANGE_BREAK_POINT)
 
     def update_massage_display(self, is_vertical):
         if is_vertical:
@@ -37,6 +41,8 @@ class GridDisplay(GridLayout):
         self.cellsInit()
         self.spacing = str(MAIN_INTERFACE_SPACE) + "dp"
         self.padding = str(MAIN_INTERFACE_SPACE) + "dp"
+
+        Clock.schedule_interval(self.update, 1/60)
 
     def cellsInit(self):
         # generating all the buttons
@@ -54,8 +60,20 @@ class GridDisplay(GridLayout):
         generateBombs()
         updateAdjBombs()
 
-        print("generated")
+    def update(self, *args):
+        ratio = self.parent.parent.width / self.parent.parent.height # the `parent.parent` refers to the main holder
+        if ratio < LAYOUT_CHANGE_BREAK_POINT:
+            self.size_hint = (1, None)
+            self.height = self.width
 
+            self.parent.size_hint = (1, None)
+            self.parent.height = self.height
+        else:
+            self.size_hint = (None, 1)
+            self.width = self.height
+
+            self.parent.size_hint = (None, 1)
+            self.parent.width = self.width
 
 class MinesSweeperApp(App):
     def __init__(self, **kwargs):
