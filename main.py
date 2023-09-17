@@ -59,8 +59,8 @@ class MainLayout(BoxLayout):
         # since on the resize function, you get the size of your parent
         # I am using this to simply spawn particles
 
-        if len(self.ids) != 0:
-            self.ids.Grid.shouldResize = True
+        if len(self.ids) != 0 and len(args) != 0:
+            self.ids.Grid.updateSize({"width": args[1][0], "height": args[1][1]})
 
     def update_massage_display(self, is_vertical):
         if is_vertical:
@@ -70,17 +70,12 @@ class MainLayout(BoxLayout):
             self.massage_label.size_hint = (1,1)
 
 class GridDisplay(GridLayout):
-    lastRatio = None
-    shouldResize = False
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = CELLCOUNT
         self.cellsInit()
         self.spacing = str(MAIN_INTERFACE_SPACE) + "dp"
         self.padding = str(MAIN_INTERFACE_SPACE) + "dp"
-
-        Clock.schedule_interval(self.update, 1/60)
 
     def cellsInit(self):
         # generating all the buttons
@@ -98,15 +93,8 @@ class GridDisplay(GridLayout):
         generateBombs()
         updateAdjBombs()
 
-    def update(self, *args):
-        screen = self.parent.parent.parent
-        ratio = screen.width / screen.height # the `parent.parent` refers to the main holder
-
-        if self.lastRatio == ratio and not self.shouldResize:
-            self.shouldResize = False
-            return
-
-        self.lastRatio = ratio
+    def updateSize(self, screen):
+        ratio = screen["width"] / screen["height"] # the `parent.parent` refers to the main holder
 
         if ratio < LAYOUT_CHANGE_BREAK_POINT:
             self.size_hint = (1, None)
@@ -121,17 +109,22 @@ class GridDisplay(GridLayout):
             elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
                 self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
         else:
-            self.size_hint = (None, 1)
-            self.width = self.height
+            # self.size_hint = (None, 1)
+            self.size = (screen["height"], screen["height"])
 
             self.parent.size_hint = (None, 1)
-            self.parent.width = self.width
+            self.parent.size = self.size
+
+            print(screen["height"], self.parent.size)
 
             # making a minimum width for the score display label
             # by limiting the width of the scroll view
-            gridMaxWidth = self.parent.parent.width - HORIZONTAL_LABEL_MIN_WIDTH
+            gridMaxWidth = screen["width"] - HORIZONTAL_LABEL_MIN_WIDTH
             if self.parent.width > gridMaxWidth:
                 self.parent.width = gridMaxWidth
+                self.size_hint = (None , 1) # honestly, I don't understand anymore how any of these works
+                # but, as long as it works, that's what matters
+                self.width = self.height
 
 class MinesSweeperApp(App):
     def __init__(self, **kwargs):
