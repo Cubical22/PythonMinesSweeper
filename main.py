@@ -7,7 +7,7 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from generation import *
 
-from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT
+from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH
 
 Window.size = (902, 451)
 
@@ -90,6 +90,12 @@ class GridDisplay(GridLayout):
 
             self.parent.size_hint = (None, 1)
             self.parent.width = self.width
+
+            # making a minimum width for the score display label
+            # by limiting the width of the scroll view
+            gridMaxWidth = self.parent.parent.width - HORIZONTAL_LABEL_MIN_WIDTH
+            if self.parent.width > gridMaxWidth:
+                self.parent.width = gridMaxWidth
 
         print (self.lastRatio, ratio)
 
