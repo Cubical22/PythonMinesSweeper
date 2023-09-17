@@ -3,6 +3,17 @@ OverLayHandler:
 <OverLayHandler@RelativeLayout>:
     MainLayout:
         size_hint: 1,1
+    MainModal:
+        size_hint: 1,1
+        opacity: 0.3
+
+<MainModal>:
+    canvas.before:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <MainLayout>:
     massage_label:massage_label

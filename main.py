@@ -2,17 +2,22 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
-from classes.CellButton import CellButton
+from kivy.uix.widget import Widget
+
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 
 from generation import *
 from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
 from classes.Particle import Particle
+from classes.CellButton import CellButton
 
 import random
 
 Window.size = (902, 451)
+
+class MainModal(Widget):
+    pass
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()
