@@ -5,15 +5,38 @@ from kivy.uix.boxlayout import BoxLayout
 from classes.CellButton import CellButton
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
-from generation import *
 
-from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH
+from generation import *
+from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
+from classes.Particle import Particle
+
+import random
 
 Window.size = (902, 451)
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()
     Grid = ObjectProperty()
+
+    particles = []
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        Clock.schedule_interval(self.update, 1/60)
+
+    def particleInit(self):
+        for _ in range(PARTICLE_COUNT):
+            x = random.random() * self.width
+            g = random.random() # g stands for color gradient
+            self.particles.append(Particle(x, 0, g, self.height))
+
+    def update(self, dt):
+        if len(self.particles) != PARTICLE_COUNT:
+            self.particleInit()
+
+        for particle in self.particles:
+            particle.update(self.canvas.before, dt, self.height)
 
     def on_parent(self, *args):
         self.on_size()
