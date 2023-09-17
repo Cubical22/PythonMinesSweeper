@@ -123,5 +123,4 @@ class MinesSweeperApp(App):
         super().__init__(**kwargs)
         self.title = "Mines Sweeper"
 
-
 MinesSweeperApp().run()

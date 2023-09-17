@@ -28,7 +28,7 @@ class Particle:
     def draw(self, canvas):
         with canvas:
             if self.rect is None:
-                Color(rgb=(self.colorG,self.colorG,self.colorG))
+                Color(rgba=(self.colorG,self.colorG,self.colorG,self.colorG))
                 self.rect = Rectangle(pos=(self.x, self.y), size=(dp(self.size), dp(self.size)))
             else:
                 self.rect.pos = (self.x, self.y)
