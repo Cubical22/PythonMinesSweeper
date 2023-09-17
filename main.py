@@ -80,10 +80,8 @@ class GridDisplay(GridLayout):
             #making maximum and minimum sizes for the `ScrollView`
             if self.parent.height < VERTICAL_SCROLL_VIEW_MIN_HEIGHT:
                 self.parent.height = VERTICAL_SCROLL_VIEW_MIN_HEIGHT
-                print("too small")
             elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
                 self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
-                print("too big")
         else:
             self.size_hint = (None, 1)
             self.width = self.height
@@ -96,8 +94,6 @@ class GridDisplay(GridLayout):
             gridMaxWidth = self.parent.parent.width - HORIZONTAL_LABEL_MIN_WIDTH
             if self.parent.width > gridMaxWidth:
                 self.parent.width = gridMaxWidth
-
-        print (self.lastRatio, ratio)
 
 class MinesSweeperApp(App):
     def __init__(self, **kwargs):
