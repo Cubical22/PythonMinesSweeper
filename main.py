@@ -25,16 +25,13 @@ class MainLayout(BoxLayout):
 
         Clock.schedule_interval(self.update, 1/60)
 
-    def particleInit(self):
+    def particleInit(self, width):
         for _ in range(PARTICLE_COUNT):
-            x = random.random() * self.width
+            x = random.random() * width
             g = random.random() # g stands for color gradient
             self.particles.append(Particle(x, 0, g, self.height))
 
     def update(self, dt):
-        if len(self.particles) != PARTICLE_COUNT:
-            self.particleInit()
-
         for particle in self.particles:
             particle.update(self.canvas.before, dt, self.height)
 
@@ -50,15 +47,26 @@ class MainLayout(BoxLayout):
 
         self.update_massage_display(ratio < LAYOUT_CHANGE_BREAK_POINT)
 
+        if len(args) != 0 and len(self.particles) < PARTICLE_COUNT:
+            self.particleInit(args[1][0])
+
+        # There are probably better ways to do this, but for now
+        # since on the resize function, you get the size of your parent
+        # I am using this to simply spawn particles
+
+        if len(self.ids) != 0:
+            self.ids.Grid.shouldResize = True
+
     def update_massage_display(self, is_vertical):
         if is_vertical:
             self.massage_label.size_hint = (1,None)
             self.massage_label.height = "50dp"
-        else:
+        elif self.massage_label is not None:
             self.massage_label.size_hint = (1,1)
 
 class GridDisplay(GridLayout):
     lastRatio = None
+    shouldResize = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -86,9 +94,11 @@ class GridDisplay(GridLayout):
         updateAdjBombs()
 
     def update(self, *args):
-        ratio = self.parent.parent.width / self.parent.parent.height # the `parent.parent` refers to the main holder
+        screen = self.parent.parent.parent
+        ratio = screen.width / screen.height # the `parent.parent` refers to the main holder
 
-        if self.lastRatio == ratio:
+        if self.lastRatio == ratio and not self.shouldResize:
+            self.shouldResize = False
             return
 
         self.lastRatio = ratio

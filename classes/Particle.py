@@ -13,8 +13,6 @@ class Particle:
         self.startPos = (x,y)
         self.colorG = colorG
 
-        print(self.x)
-
         self.speed = random.random() * 40 + 80
         self.size = 10
 
