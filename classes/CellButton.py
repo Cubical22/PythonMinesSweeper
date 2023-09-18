@@ -21,7 +21,7 @@ class CellButton(Button):
         if self.cellHiddenState == 1:
             print("you lost")
             self.background_color = (1,0,0,1)
-            App.get_running_app().currentState = 1 # updating the currentState variable
+            self.parent.parent.parent.parent.lost() # self.parent.parent.parent.parent = overlayHolder
         else:
             if self.adjBombCount == 0:
                 exploreFromStart(self.yIndex, self.xIndex) # for some reason I don't know, passing args as [x,y] is

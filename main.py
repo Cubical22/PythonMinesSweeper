@@ -22,14 +22,37 @@ class OverlayHolder(RelativeLayout):
         super().__init__(**kwargs)
 
     def won(self):
+        self.activateModal(2)
+
+    def lost(self):
+        self.activateModal(1)
+
+    def activateModal(self,state):
         self.ids.modal.opacity = 1
         self.ids.modal.disabled = False
-        App.get_running_app().currentState = 2
+        App.get_running_app().currentState = state
 
 class MainModal(Widget):
     def restartGame(self):
         self.opacity = 0
         self.disabled = True
+
+        # region resetting the cells
+
+        for y in range(CELLCOUNT):
+            for x in range(CELLCOUNT):
+                cells[x][y].background_color = (0.5,0.5,0.5,1)
+                cells[x][y].text = ""
+                cells[x][y].cellState = 0
+                cells[x][y].cellHiddenState = 0
+                cells[x][y].adjBombCount = 0
+
+        generateBombs()
+        updateAdjBombs()
+
+        # endregion
+
+        App.get_running_app().currentState = 0
         
     def on_touch_down(self, touch):
         super().on_touch_down(touch)
