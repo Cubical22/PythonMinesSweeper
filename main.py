@@ -22,9 +22,11 @@ class OverlayHolder(RelativeLayout):
         super().__init__(**kwargs)
 
     def won(self):
+        self.ids.modal.ids.popupText.text = "you have won, with the time of {}"
         self.activateModal(2)
 
     def lost(self):
+        self.ids.modal.ids.popupText.text = "you have lost"
         self.activateModal(1)
 
     def activateModal(self,state):
