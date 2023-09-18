@@ -43,6 +43,7 @@ class MainLayout(BoxLayout):
     def on_parent(self, *args):
         self.on_size()
 
+    # region Main Sizing Functions
     def on_size(self, *args):
         ratio = self.width/ self.height
         if ratio < LAYOUT_CHANGE_BREAK_POINT:
@@ -69,6 +70,8 @@ class MainLayout(BoxLayout):
         elif self.massage_label is not None:
             self.massage_label.size_hint = (1,1)
 
+    # endregion
+
 class GridDisplay(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -78,7 +81,7 @@ class GridDisplay(GridLayout):
         self.padding = str(MAIN_INTERFACE_SPACE) + "dp"
 
     def cellsInit(self):
-        # generating all the buttons
+        # region generating all the buttons
         for y in range(CELLCOUNT):
             row = []
             for x in range(CELLCOUNT):
@@ -89,6 +92,7 @@ class GridDisplay(GridLayout):
                 self.add_widget(button)
                 row.append(button)
             cells.append(row)
+        # endregion
 
         generateBombs()
         updateAdjBombs()
@@ -97,6 +101,7 @@ class GridDisplay(GridLayout):
         ratio = screen["width"] / screen["height"] # the `parent.parent` refers to the main holder
 
         if ratio < LAYOUT_CHANGE_BREAK_POINT:
+            # region Horizontal Sizing for the grid and the scrollView
             self.size_hint = (1, None)
             self.height = self.width
 
@@ -108,8 +113,9 @@ class GridDisplay(GridLayout):
                 self.parent.height = VERTICAL_SCROLL_VIEW_MIN_HEIGHT
             elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
                 self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
+            # endregion
         else:
-            # self.size_hint = (None, 1)
+            # region Vertical Sizing for the grid and scrollView
             self.size = (screen["height"], screen["height"])
 
             self.parent.size_hint = (None, 1)
@@ -125,6 +131,7 @@ class GridDisplay(GridLayout):
                 self.size_hint = (None , 1) # honestly, I don't understand anymore how any of these works
                 # but, as long as it works, that's what matters
                 self.width = self.height
+            # endregion
 
 class MinesSweeperApp(App):
     def __init__(self, **kwargs):
