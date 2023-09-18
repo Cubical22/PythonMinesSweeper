@@ -55,7 +55,10 @@ class MainModal(Widget):
         App.get_running_app().currentState = 0
         
     def on_touch_down(self, touch):
-        super().on_touch_down(touch)
+        if self.disabled:
+            super().on_touch_down(touch) # touch happening over the modal
+        else:
+            return super().on_touch_down(touch) # only touch happening on the modal
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()
