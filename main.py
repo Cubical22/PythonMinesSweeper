@@ -23,10 +23,16 @@ class OverlayHolder(RelativeLayout):
 
     def won(self):
         self.ids.modal.opacity = 1
+        self.ids.modal.disabled = False
         App.get_running_app().currentState = 2
 
 class MainModal(Widget):
-    pass
+    def restartGame(self):
+        self.opacity = 0
+        self.disabled = True
+        
+    def on_touch_down(self, touch):
+        super().on_touch_down(touch)
 
 class MainLayout(BoxLayout):
     massage_label = ObjectProperty()

@@ -7,6 +7,7 @@ OverlayHolder:
         id: modal
         size_hint: 1,1
         opacity: 0
+        disabled: True
 
 <MainModal>:
     canvas.before:
@@ -32,6 +33,8 @@ OverlayHolder:
         height: dp(80)
         width: max(self.parent.width / 2, dp(200))
         font_size: dp(40)
+
+        on_press: self.parent.restartGame()
 
 <MainLayout>:
     massage_label:massage_label
