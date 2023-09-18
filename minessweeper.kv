@@ -1,19 +1,37 @@
-OverLayHandler:
+OverlayHolder:
 
-<OverLayHandler@RelativeLayout>:
+<OverlayHolder>:
     MainLayout:
         size_hint: 1,1
     MainModal:
+        id: modal
         size_hint: 1,1
         opacity: 0
 
 <MainModal>:
     canvas.before:
         Color:
-            rgb: 1,1,1
+            rgba: 0,0,0,0.7
         Rectangle:
             pos: self.pos
             size: self.size
+    Label:
+        text: "you have lost"
+        id: popupText
+        pos: 0 ,self.parent.height - self.height
+        size_hint: None, None
+        height: dp(80)
+        width: self.parent.width
+        font_size: dp(40)
+
+    Button:
+        text: "restart"
+        id: restartButton
+        pos: self.parent.width/2 - self.width/2 ,self.parent.height - self.height - self.parent.ids.popupText.height - dp(30)
+        size_hint: None, None
+        height: dp(80)
+        width: max(self.parent.width / 2, dp(200))
+        font_size: dp(40)
 
 <MainLayout>:
     massage_label:massage_label

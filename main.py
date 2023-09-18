@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.widget import Widget
 
 from kivy.properties import ObjectProperty
@@ -15,6 +16,14 @@ from classes.CellButton import CellButton
 import random
 
 Window.size = (902, 451)
+
+class OverlayHolder(RelativeLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def won(self):
+        self.ids.modal.opacity = 1
+        App.get_running_app().currentState = 2
 
 class MainModal(Widget):
     pass
@@ -134,6 +143,8 @@ class GridDisplay(GridLayout):
             # endregion
 
 class MinesSweeperApp(App):
+    currentState = 0  # 0: none 1: lost 2: won
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.title = "Mines Sweeper"

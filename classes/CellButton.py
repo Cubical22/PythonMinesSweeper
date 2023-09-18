@@ -2,6 +2,8 @@ from kivy.uix.button import Button
 from cellExplore import exploreFromStart
 from stateHandling import checkForWinState
 
+from kivy.app import App
+
 class CellButton(Button):
     xIndex = 0
     yIndex = 0
@@ -12,10 +14,14 @@ class CellButton(Button):
     adjBombCount = 0 # How many bombs on the surrounding cells
 
     def callCell(self, *args):
+        if App.get_running_app().currentState != 0:
+            return # if we have won, or we have lost
+
         # if the cell is a bomb
         if self.cellHiddenState == 1:
             print("you lost")
-            self.background_color = (1,0,0,1) # DEBUGGING: this is only to debug the code
+            self.background_color = (1,0,0,1)
+            App.get_running_app().currentState = 1 # updating the currentState variable
         else:
             if self.adjBombCount == 0:
                 exploreFromStart(self.yIndex, self.xIndex) # for some reason I don't know, passing args as [x,y] is
@@ -31,3 +37,4 @@ class CellButton(Button):
 
         if isWinState:
             print("you have won")
+            self.parent.parent.parent.parent.won()
