@@ -26,10 +26,19 @@ OverlayHolder:
         width: self.parent.width
         font_size: dp(40)
 
+    Label:
+        text: "time: {}"
+        id: timeText
+        pos: 0 ,self.parent.height - self.height - self.parent.ids.popupText.height
+        size_hint: None, None
+        height: dp(80)
+        width: self.parent.width
+        font_size: dp(40)
+
     Button:
         text: "restart"
         id: restartButton
-        pos: self.parent.width/2 - self.width/2 ,self.parent.height - self.height - self.parent.ids.popupText.height - dp(30)
+        pos: self.parent.width/2 - self.width/2 ,self.parent.height - self.height - self.parent.ids.popupText.height - self.parent.ids.timeText.height - dp(30)
         size_hint: None, None
         height: dp(80)
         width: max(self.parent.width / 2, dp(200))

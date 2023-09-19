@@ -26,7 +26,7 @@ class OverlayHolder(RelativeLayout):
         Clock.schedule_interval(self.addToTime, 1/60)
 
     def won(self):
-        self.ids.modal.ids.popupText.text = "you have won, with the time of {}"
+        self.ids.modal.ids.popupText.text = "you have won"
         self.activateModal(2)
 
     def lost(self):
