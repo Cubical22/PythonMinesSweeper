@@ -20,10 +20,11 @@ Window.size = (902, 451)
 
 class OverlayHolder(RelativeLayout):
     currentTime = 0
+    timerInterval = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_interval(self.addToTime, 1/60)
+        self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
 
     def won(self):
         self.ids.modal.ids.popupText.text = "you have won"
@@ -34,6 +35,9 @@ class OverlayHolder(RelativeLayout):
         self.activateModal(1)
 
     def activateModal(self,state):
+        if self.timerInterval is not None:
+            self.timerInterval.release() # stopping the timer if your die or win
+        self.ids.modal.ids.timeText.text = "Time: " + self.getTimerText()
         self.ids.modal.opacity = 1
         self.ids.modal.disabled = False
         App.get_running_app().currentState = state
@@ -43,12 +47,23 @@ class OverlayHolder(RelativeLayout):
             self.currentTime += dt
 
         # this section is used to update the time for the timer display label
-        self.ids.mainLayout.ids.massage_label.text = str(math.floor(self.currentTime * 10) / 10)
+        self.ids.mainLayout.ids.massage_label.text = self.getTimerText()
+
+    def getTimerText(self):
+        return str(math.floor(self.currentTime * 10) / 10)
+
+    def restartTimer(self):
+        self.currentTime = 0
+        self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
+        print("timer restarted")
 
 class MainModal(Widget):
     def restartGame(self):
         self.opacity = 0
         self.disabled = True
+
+        # restarting the new timer
+        self.parent.restartTimer()
 
         # region resetting the cells
 
