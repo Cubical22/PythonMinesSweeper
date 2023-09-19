@@ -14,12 +14,16 @@ from classes.Particle import Particle
 from classes.CellButton import CellButton
 
 import random
+import math
 
 Window.size = (902, 451)
 
 class OverlayHolder(RelativeLayout):
+    currentTime = 0
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        Clock.schedule_interval(self.addToTime, 1/60)
 
     def won(self):
         self.ids.modal.ids.popupText.text = "you have won, with the time of {}"
@@ -33,6 +37,13 @@ class OverlayHolder(RelativeLayout):
         self.ids.modal.opacity = 1
         self.ids.modal.disabled = False
         App.get_running_app().currentState = state
+
+    def addToTime(self,dt):
+        if dt:
+            self.currentTime += dt
+
+        # this section is used to update the time for the timer display label
+        self.ids.mainLayout.ids.massage_label.text = str(math.floor(self.currentTime * 10) / 10)
 
 class MainModal(Widget):
     def restartGame(self):

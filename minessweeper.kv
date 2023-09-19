@@ -2,6 +2,7 @@ OverlayHolder:
 
 <OverlayHolder>:
     MainLayout:
+        id: mainLayout
         size_hint: 1,1
     MainModal:
         id: modal
@@ -41,8 +42,9 @@ OverlayHolder:
     Label:
         text: "time: {}"
         size_hint: 1, None
-        height: "50dp"
+        height: str(max(self.width / 5, 70)) + "dp"
         id: massage_label
+        font_size: str(max(self.width / 6, 25)) + "dp"
     ScrollView:
         GridDisplay:
             id: Grid
