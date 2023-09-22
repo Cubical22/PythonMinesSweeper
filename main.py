@@ -64,7 +64,17 @@ class HelpersLayout(BoxLayout):
     # possibly everything else in this app, is handled on MainLayout
     # since we only need a single resize method, confirmed, it is on MainLayout
     # Absolutely not because that is where it was from the start
-    pass
+    def toggle(self, button): # the button var, refers to the button used to toggle the display on the helpers layout
+        ratio = self.width / self.height
+        if ratio < LAYOUT_CHANGE_BREAK_POINT: # the button does not exist while working with horizontal layout
+            return
+
+        self.opacity = 1 if self.disabled else 0
+        self.disabled = not self.disabled
+
+        # here we are toggling the distance from top, between the HelpersLayout height and the const dp(10) using
+        # the disabled property set above
+        button.pos = (dp(10), self.parent.height - button.height - (self.height if not self.disabled else dp(10)))
 
 class MainModal(Widget):
     def restartGame(self):
@@ -141,13 +151,14 @@ class MainLayout(BoxLayout):
         if len(self.ids) != 0 and len(args) != 0:
             self.ids.Grid.updateSize({"width": args[1][0], "height": args[1][1]})
 
-            # this section is used to make the helpers layout be disabled or enabled upon resize
+            # this section is used to make the helpers layout and the activation button be disabled or enabled upon resize
             disableFlag = ratio >= LAYOUT_CHANGE_BREAK_POINT
             opacityFlag = ratio < LAYOUT_CHANGE_BREAK_POINT
             self.parent.ids.HelpersLayout.disabled = disableFlag
             self.parent.ids.HelpersLayout.opacity = 1 if opacityFlag else 0
             self.parent.ids.HelpersDisplayButton.disabled = not disableFlag
             self.parent.ids.HelpersDisplayButton.opacity = 0 if opacityFlag else 1
+            self.parent.ids.HelpersDisplayButton.pos = (dp(10), self.height - self.parent.ids.HelpersDisplayButton.height - dp(10))
 
     def update_massage_display(self, is_vertical):
         if is_vertical:

@@ -16,6 +16,7 @@ OverlayHolder:
         width: dp(40)
         height: dp(40)
         pos: dp(10), root.height - self.height - dp(10)
+        on_press: root.ids.HelpersLayout.toggle(self)
     MainModal:
         id: modal
         size_hint: 1,1
