@@ -4,11 +4,43 @@ OverlayHolder:
     MainLayout:
         id: mainLayout
         size_hint: 1,1
+    HelpersLayout:
+        id: HelpersLayout
+        size_hint: 1, None
+        height: dp(60)
+        pos: 0, root.height - self.height
     MainModal:
         id: modal
         size_hint: 1,1
         opacity: 0
         disabled: True
+
+<HelperButtonHolder@RelativeLayout>:
+    passing_text: "N/A"
+    size_hint: 1, None
+    height: self.parent.height - dp(10)
+    HelperButton:
+        text: self.parent.passing_text
+        size_hint: 1,1
+        pos: 0, dp(10)
+
+<HelpersLayout>:
+    canvas.before:
+        Color:
+            rgba: 0.2,0.2,0.3,0.7
+        RoundedRectangle:
+            size: self.width, self.height + dp(10)
+            pos: self.pos[0], self.pos[1] + dp(10)
+
+    HelperButtonHolder:
+        passing_text: "a"
+
+    HelperButtonHolder:
+        passing_text: "b"
+
+    HelperButtonHolder:
+        passing_text: "c"
+
 
 <MainModal>:
     canvas.before:

@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.core.window import Window
+from kivy.metrics import dp
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
@@ -12,6 +13,7 @@ from generation import *
 from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
 from classes.Particle import Particle
 from classes.CellButton import CellButton
+from classes.HelperButton import HelperButton # even though this button is not used, it needs to be included for the kv file
 
 import random
 import math
@@ -56,6 +58,13 @@ class OverlayHolder(RelativeLayout):
         self.currentTime = 0
         self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
         print("timer restarted")
+
+class HelpersLayout(BoxLayout):
+    # NOTE: the resize functionality on this guy, and
+    # possibly everything else in this app, is handled on MainLayout
+    # since we only need a single resize method, confirmed, it is on MainLayout
+    # Absolutely not because that is where it was from the start
+    pass
 
 class MainModal(Widget):
     def restartGame(self):
@@ -131,6 +140,10 @@ class MainLayout(BoxLayout):
 
         if len(self.ids) != 0 and len(args) != 0:
             self.ids.Grid.updateSize({"width": args[1][0], "height": args[1][1]})
+
+            # this section is used to make the helpers layout be disabled or enabled upon resize
+            self.parent.ids.HelpersLayout.disabled = ratio >= LAYOUT_CHANGE_BREAK_POINT
+            self.parent.ids.HelpersLayout.opacity = 1 if ratio < LAYOUT_CHANGE_BREAK_POINT else 0
 
     def update_massage_display(self, is_vertical):
         if is_vertical:
