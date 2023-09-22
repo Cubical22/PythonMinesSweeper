@@ -142,8 +142,12 @@ class MainLayout(BoxLayout):
             self.ids.Grid.updateSize({"width": args[1][0], "height": args[1][1]})
 
             # this section is used to make the helpers layout be disabled or enabled upon resize
-            self.parent.ids.HelpersLayout.disabled = ratio >= LAYOUT_CHANGE_BREAK_POINT
-            self.parent.ids.HelpersLayout.opacity = 1 if ratio < LAYOUT_CHANGE_BREAK_POINT else 0
+            disableFlag = ratio >= LAYOUT_CHANGE_BREAK_POINT
+            opacityFlag = ratio < LAYOUT_CHANGE_BREAK_POINT
+            self.parent.ids.HelpersLayout.disabled = disableFlag
+            self.parent.ids.HelpersLayout.opacity = 1 if opacityFlag else 0
+            self.parent.ids.HelpersDisplayButton.disabled = not disableFlag
+            self.parent.ids.HelpersDisplayButton.opacity = 0 if opacityFlag else 1
 
     def update_massage_display(self, is_vertical):
         if is_vertical:
