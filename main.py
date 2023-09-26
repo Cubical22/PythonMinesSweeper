@@ -75,6 +75,12 @@ class HelpersLayout(BoxLayout):
         # here we are toggling the distance from top, between the HelpersLayout height and the const dp(10) using
         # the disabled property set above
         button.pos = (dp(10), self.parent.height - button.height - (self.height if not self.disabled else dp(10)))
+        
+    def on_touch_down(self, touch):
+        if self.opacity == 1:
+            return super().on_touch_down(touch)
+        else:
+            super().on_touch_down(touch)
 
 class MainModal(Widget):
     def restartGame(self):
