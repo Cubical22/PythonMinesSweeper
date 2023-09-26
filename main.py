@@ -10,10 +10,13 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 
 from generation import *
-from globalVal import LAYOUT_CHANGE_BREAK_POINT, VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
+from globalVal import LAYOUT_CHANGE_BREAK_POINT,\
+    VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
 from classes.Particle import Particle
 from classes.CellButton import CellButton
-from classes.HelperButton import HelperButton # even though this button is not used, it needs to be included for the kv file
+
+# even though this button is not used, it needs to be included for the kv file
+from classes.HelperButton import HelperButton
 
 import random
 import math
