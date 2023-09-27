@@ -140,6 +140,10 @@ class MainLayout(BoxLayout):
     def on_parent(self, *args):
         self.on_size()
 
+    #this function is used to toggle the background of the application to make ability stand out
+    def toggleBackgroundForAbility(self):
+        print("toggling") # TODO: made this layout have a dark bg on using each ability
+
     # region Main Sizing Functions
     def on_size(self, *args):
         ratio = self.width/ self.height
