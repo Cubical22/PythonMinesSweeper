@@ -26,12 +26,14 @@ OverlayHolder:
 <HelperButtonHolder@RelativeLayout>:
     passing_text: "N/A"
     src: ""
+    abilityIndex: 0
     size_hint: 1, None
     height: self.parent.height - dp(10)
     HelperButton:
         text: self.parent.passing_text
         size_hint: 1,1
         pos: 0, dp(10)
+        abilityIndex: root.abilityIndex
 
 <HelperButton>:
     background_color: 0,0,0,0
@@ -55,15 +57,17 @@ OverlayHolder:
     HelperButtonHolder:
         passing_text: "a"
         src: "assets/test.png"
+        abilityIndex: 0
 
     HelperButtonHolder:
         passing_text: "b"
         src: "assets/test.png"
+        abilityIndex: 1
 
     HelperButtonHolder:
         passing_text: "c"
         src: "assets/test.png"
-
+        abilityIndex: 2
 
 <MainModal>:
     canvas.before:
