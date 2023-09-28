@@ -45,3 +45,4 @@ class CellButton(Button):
             App.get_running_app().usingCellReveal = False
             mainLayout = self.parent.parent.parent
             mainLayout.toggleBackgroundForAbility()
+            print("not implemented yet")
