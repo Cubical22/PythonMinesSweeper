@@ -133,8 +133,8 @@ class MainLayout(BoxLayout):
 
         Clock.schedule_interval(self.update, 1/60)
 
+    # region particles
     def particleInit(self, width):
-        self.particles = []
         for _ in range(PARTICLE_COUNT):
             x = random.random() * width
             g = random.random() # g stands for color gradient
@@ -143,6 +143,12 @@ class MainLayout(BoxLayout):
     def update(self, dt):
         for particle in self.particles:
             particle.update(self.canvas.before, dt, self.height)
+
+    def redrawAllParticles(self):
+        for particle in self.particles:
+            particle.rect = None # setting the rect to None makes the particle redraw the rect itself
+
+    # endregion
 
     def on_parent(self, *args):
         self.on_size()
@@ -158,8 +164,8 @@ class MainLayout(BoxLayout):
                 Color(rgba=(0.1,0.1,0.1,0.9))
                 self.focusRect = Rectangle(size=self.size, pos=self.pos)
         else:
-            self.canvas.before.clear() # TODO: make this clear section not reset all the particles
-            self.particleInit(self.width)
+            self.canvas.before.clear()
+            self.redrawAllParticles()
             self.isOnFocusMode = False
 
     # region Main Sizing Functions
