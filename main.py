@@ -134,6 +134,7 @@ class MainLayout(BoxLayout):
         Clock.schedule_interval(self.update, 1/60)
 
     def particleInit(self, width):
+        self.particles = []
         for _ in range(PARTICLE_COUNT):
             x = random.random() * width
             g = random.random() # g stands for color gradient
@@ -157,7 +158,8 @@ class MainLayout(BoxLayout):
                 Color(rgba=(0.1,0.1,0.1,0.9))
                 self.focusRect = Rectangle(size=self.size, pos=self.pos)
         else:
-            self.canvas.before.clear() # TODO: make this clear statement not clear all particles
+            self.canvas.before.clear() # TODO: make this clear section not reset all the particles
+            self.particleInit(self.width)
             self.isOnFocusMode = False
 
     # region Main Sizing Functions
