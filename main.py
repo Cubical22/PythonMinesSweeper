@@ -9,6 +9,9 @@ from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 
+from kivy.graphics.vertex_instructions import Rectangle
+from kivy.graphics.context_instructions import Color
+
 from generation import *
 from globalVal import LAYOUT_CHANGE_BREAK_POINT,\
     VERTICAL_SCROLL_VIEW_MAX_HEIGHT,VERTICAL_SCROLL_VIEW_MIN_HEIGHT, HORIZONTAL_LABEL_MIN_WIDTH, PARTICLE_COUNT
@@ -121,6 +124,9 @@ class MainLayout(BoxLayout):
     Grid = ObjectProperty()
 
     particles = []
+
+    isOnFocusMode = False
+    focusRect = None
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -142,7 +148,17 @@ class MainLayout(BoxLayout):
 
     #this function is used to toggle the background of the application to make ability stand out
     def toggleBackgroundForAbility(self):
-        print("toggling") # TODO: made this layout have a dark bg on using each ability
+        # toggle the helpers option first of all
+
+        if not self.isOnFocusMode:
+            self.parent.ids.HelpersLayout.toggle(self.parent.ids.HelpersDisplayButton)
+            self.isOnFocusMode = True
+            with self.canvas.before:
+                Color(rgba=(0.1,0.1,0.1,0.9))
+                self.focusRect = Rectangle(size=self.size, pos=self.pos)
+        else:
+            self.canvas.before.clear() # TODO: make this clear statement not clear all particles
+            self.isOnFocusMode = False
 
     # region Main Sizing Functions
     def on_size(self, *args):
@@ -164,14 +180,20 @@ class MainLayout(BoxLayout):
         if len(self.ids) != 0 and len(args) != 0:
             self.ids.Grid.updateSize({"width": args[1][0], "height": args[1][1]})
 
-            # this section is used to make the helpers layout and the activation button be disabled or enabled upon resize
+            # this section is used to make the helpers layout and the activation button be disabled or enabled upon
+            # resize
             disableFlag = ratio >= LAYOUT_CHANGE_BREAK_POINT
             opacityFlag = ratio < LAYOUT_CHANGE_BREAK_POINT
             self.parent.ids.HelpersLayout.disabled = disableFlag
             self.parent.ids.HelpersLayout.opacity = 1 if opacityFlag else 0
             self.parent.ids.HelpersDisplayButton.disabled = not disableFlag
             self.parent.ids.HelpersDisplayButton.opacity = 0 if opacityFlag else 1
-            self.parent.ids.HelpersDisplayButton.pos = (dp(10), self.height - self.parent.ids.HelpersDisplayButton.height - dp(10))
+            self.parent.ids.HelpersDisplayButton.pos = (dp(10), self.height -
+                                                        self.parent.ids.HelpersDisplayButton.height - dp(10))
+
+        if self.isOnFocusMode:
+            self.focusRect.size = self.size
+            self.focusRect.pos= self.pos
 
     def update_massage_display(self, is_vertical):
         if is_vertical:
