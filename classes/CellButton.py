@@ -46,3 +46,12 @@ class CellButton(Button):
             mainLayout = self.parent.parent.parent
             mainLayout.toggleBackgroundForAbility()
             cellReveal((self.xIndex, self.yIndex))
+
+    def revealSelf(self): # this function is called in cellReveal.py, used to make the display work
+        if self.cellState == 1:
+            return
+        match self.cellHiddenState:
+            case 0:
+                self.background_color = (.4,.7,.6,1)
+            case 1:
+                self.background_color = (.8,.2,.2,1)
