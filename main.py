@@ -136,9 +136,9 @@ class MainLayout(BoxLayout):
     # region particles
     def particleInit(self, width):
         for _ in range(PARTICLE_COUNT):
-            x = random.random() * width
+            x = random.random()
             g = random.random() # g stands for color gradient
-            self.particles.append(Particle(x, 0, g, self.height))
+            self.particles.append(Particle(x, 0, g, self.height, self.width))
 
     def update(self, dt):
         for particle in self.particles:
