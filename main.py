@@ -203,6 +203,9 @@ class MainLayout(BoxLayout):
             self.focusRect.size = self.size
             self.focusRect.pos= self.pos
 
+        for particle in self.particles:
+            particle.xMultiplier = self.width
+
     def update_massage_display(self, is_vertical):
         if is_vertical:
             self.massage_label.size_hint = (1,None)
