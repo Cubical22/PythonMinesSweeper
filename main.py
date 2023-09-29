@@ -249,10 +249,12 @@ class GridDisplay(GridLayout):
             self.parent.height = self.height
 
             #making maximum and minimum sizes for the `ScrollView`
-            if self.parent.height < VERTICAL_SCROLL_VIEW_MIN_HEIGHT:
-                self.parent.height = VERTICAL_SCROLL_VIEW_MIN_HEIGHT
-            elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
-                self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
+            # if self.parent.height < VERTICAL_SCROLL_VIEW_MIN_HEIGHT:
+            #     self.parent.height = VERTICAL_SCROLL_VIEW_MIN_HEIGHT
+            # elif self.parent.height > VERTICAL_SCROLL_VIEW_MAX_HEIGHT:
+            #     self.parent.height = VERTICAL_SCROLL_VIEW_MAX_HEIGHT
+            self.parent.height = max(min(self.parent.height, VERTICAL_SCROLL_VIEW_MAX_HEIGHT),
+                                     VERTICAL_SCROLL_VIEW_MIN_HEIGHT)
             # endregion
         else:
             # region Vertical Sizing for the grid and scrollView

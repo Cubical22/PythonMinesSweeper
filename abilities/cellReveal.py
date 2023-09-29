@@ -8,7 +8,6 @@ def cellReveal(selectedCellPos):
         outsideX = 2 - selectedCellPos[0]
     elif selectedCellPos[0] + 2 > CELLCOUNT - 1:
         outsideX = (CELLCOUNT - 1 - selectedCellPos[0]) - 2
-        print("got")
 
     if selectedCellPos[1] - 2 < 0:
         outsideY = 2 - selectedCellPos[1]

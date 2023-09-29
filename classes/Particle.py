@@ -37,6 +37,7 @@ class Particle:
 
         if self.y > maxHeight: # respawning the particle when goes out of the screen
             self.x = self.startPos[0]
-            self.y = self.startPos[1] - self.size # this section is used to make sure the particle spawns below the screen
+            self.y = self.startPos[1] - self.size
+            # this section is used to make sure the particle spawns below the screen
 
         self.draw(canvas)
