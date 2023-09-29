@@ -1,6 +1,7 @@
 from kivy.uix.button import Button
 from cellExplore import exploreFromStart
 from stateHandling import checkForWinState
+from abilities.cellReveal import cellReveal
 
 from kivy.app import App
 
@@ -45,4 +46,4 @@ class CellButton(Button):
             App.get_running_app().usingCellReveal = False
             mainLayout = self.parent.parent.parent
             mainLayout.toggleBackgroundForAbility()
-            print("not implemented yet")
+            cellReveal((self.xIndex, self.yIndex))
