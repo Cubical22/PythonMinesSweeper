@@ -71,7 +71,7 @@ class HelpersLayout(BoxLayout):
     # since we only need a single resize method, confirmed, it is on MainLayout
     # Absolutely not because that is where it was from the start
     def toggle(self, button): # the button var, refers to the button used to toggle the display on the helpers layout
-        ratio = self.width / self.height
+        ratio = self.parent.width / self.parent.height
         if ratio < LAYOUT_CHANGE_BREAK_POINT: # the button does not exist while working with horizontal layout
             return
 

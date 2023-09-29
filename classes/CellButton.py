@@ -42,7 +42,6 @@ class CellButton(Button):
                 self.parent.parent.parent.parent.won()
 
         elif App.get_running_app().usingCellReveal:
-            # TODO: make the ability work
             App.get_running_app().usingCellReveal = False
             mainLayout = self.parent.parent.parent
             mainLayout.toggleBackgroundForAbility()
