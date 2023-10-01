@@ -42,9 +42,8 @@ OverlayHolder:
 
     Image:
         source: root.parent.src
-        size_hint: 1,1
-        allow_stretch: True
-
+        size: self.parent.height + dp(10),self.parent.height + dp(5)
+        pos: root.width / 2 - self.width / 2, self.parent.pos[1] - dp(2.5)
 
 <HelpersLayout>:
     canvas.before:
@@ -56,17 +55,17 @@ OverlayHolder:
 
     HelperButtonHolder:
         passing_text: "a"
-        src: "assets/test.png"
+        src: "assets/cellReveal-ThumbNail.png"
         abilityIndex: 0
 
     HelperButtonHolder:
         passing_text: "b"
-        src: "assets/test.png"
+        src: "assets/safeClick-ThumbNai.png"
         abilityIndex: 1
 
     HelperButtonHolder:
         passing_text: "c"
-        src: "assets/test.png"
+        src: "assets/BoardChange.png"
         abilityIndex: 2
 
 <MainModal>:
