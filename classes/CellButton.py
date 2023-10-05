@@ -18,22 +18,14 @@ class CellButton(Button):
         if App.get_running_app().currentState != 0:
             return # if we have won, or we have lost
 
-        if not App.get_running_app().usingCellReveal:
+        if not App.get_running_app().usingCellReveal and not App.get_running_app().usingSafeClick:
             # if the cell is a bomb
             if self.cellHiddenState == 1:
                 print("you lost")
                 self.background_color = (1,0,0,1)
                 self.parent.parent.parent.parent.lost() # self.parent.parent.parent.parent = overlayHolder
             else:
-                if self.adjBombCount == 0:
-                    exploreFromStart(self.yIndex, self.xIndex) # for some reason I don't know, passing args as [x,y] is
-                    # not working, and is doing everything in reverse :)
-                    # passing it as [y,x] fixed our problem for now
-                else: # this is a counted cell
-                    self.background_color = (1,1,1,1)
-                    self.cellState = 1 # explored
-                    self.text = str(self.adjBombCount)
-                    self.color = (0,0,0,1)
+                self.updateSelfEmpty()
 
             isWinState = checkForWinState()
 
@@ -41,17 +33,37 @@ class CellButton(Button):
                 print("you have won")
                 self.parent.parent.parent.parent.won()
 
-        elif App.get_running_app().usingCellReveal:
-            App.get_running_app().usingCellReveal = False
+        else:
             mainLayout = self.parent.parent.parent
             mainLayout.toggleBackgroundForAbility()
-            cellReveal((self.xIndex, self.yIndex))
 
-    def revealSelf(self): # this function is called in cellReveal.py, used to make the display work
+            if App.get_running_app().usingCellReveal:
+                App.get_running_app().usingCellReveal = False
+                cellReveal((self.xIndex, self.yIndex))
+
+            elif App.get_running_app().usingSafeClick:
+                App.get_running_app().usingSafeClick = False
+                self.revealSelf(True)
+
+    def updateSelfEmpty(self):
+        if self.adjBombCount == 0:
+            exploreFromStart(self.yIndex, self.xIndex)  # for some reason I don't know, passing args as [x,y] is
+            # not working, and is doing everything in reverse :)
+            # passing it as [y,x] fixed our problem for now
+        else:  # this is a counted cell
+            self.background_color = (1, 1, 1, 1)
+            self.cellState = 1  # explored
+            self.text = str(self.adjBombCount)
+            self.color = (0, 0, 0, 1)
+
+    def revealSelf(self, isSafeClick=False): # this function is called in cellReveal.py, used to make the display work
         if self.cellState == 1:
             return
         match self.cellHiddenState:
             case 0:
-                self.background_color = (.4,.7,.6,1)
+                if isSafeClick:
+                    self.updateSelfEmpty()
+                else:
+                    self.background_color = (.4,.7,.6,1)
             case 1:
                 self.background_color = (.8,.2,.2,1)

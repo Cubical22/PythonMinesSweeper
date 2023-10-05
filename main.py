@@ -282,6 +282,7 @@ class MinesSweeperApp(App):
     currentState = 0  # 0: none 1: lost 2: won
 
     usingCellReveal = False
+    usingSafeClick = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
