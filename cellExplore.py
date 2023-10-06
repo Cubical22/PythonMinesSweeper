@@ -21,6 +21,11 @@ def exploreAdjCell(cellPos, nextGen):
     if exploreWithOffset(cellPos, 0, -1): nextGen.append([cellPos[0], cellPos[1] - 1])
     if exploreWithOffset(cellPos, 0, 0): nextGen.append([cellPos[0], cellPos[1]])
 
+    # diagonals
+    if exploreWithOffset(cellPos, 1, 1): nextGen.append([cellPos[0] + 1, cellPos[1] + 1])
+    if exploreWithOffset(cellPos, 1, -1): nextGen.append([cellPos[0] + 1, cellPos[1] - 1])
+    if exploreWithOffset(cellPos, -1, 1): nextGen.append([cellPos[0] - 1, cellPos[1] + 1])
+    if exploreWithOffset(cellPos, -1, -1): nextGen.append([cellPos[0] - 1, cellPos[1] - 1])
 
 def exploreWithOffset(cellPos, offX, offY):
     if not checkInsideLength(cellPos[0] + offX, cellPos[1] + offY, CELLCOUNT):

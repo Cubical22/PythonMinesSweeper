@@ -22,7 +22,7 @@ class CellButton(Button):
             # if the cell is a bomb
             if self.cellHiddenState == 1:
                 print("you lost")
-                self.background_color = (1,0,0,1)
+                self.revealSelf()
                 self.parent.parent.parent.parent.lost() # self.parent.parent.parent.parent = overlayHolder
             else:
                 self.updateSelfEmpty()
