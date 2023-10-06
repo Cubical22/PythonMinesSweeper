@@ -27,4 +27,4 @@ class HelperButton(Button):
 
                     self.mainLayout.toggleBackgroundForAbility()
             case 2:
-                print("case 2 is not done yet")
+                self.mainLayout.resetBoard()

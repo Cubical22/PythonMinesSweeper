@@ -168,6 +168,10 @@ class MainLayout(BoxLayout):
             self.redrawAllParticles()
             self.isOnFocusMode = False
 
+    def resetBoard(self):
+        self.parent.ids.HelpersLayout.toggle(self.parent.ids.HelpersDisplayButton)
+        self.parent.ids.modal.restartGame() # since the restart was already implemented on the modal, I just reused it
+
     # region Main Sizing Functions
     def on_size(self, *args):
         ratio = self.width/ self.height

@@ -18,7 +18,7 @@ There are a couple of things that I have to go over
 - [x] added the abilities holder
     - [x] Cell Reveal
     - [x] Safe Click
-    - [ ] Board Change
+    - [x] Board Change
 - [ ] add levels and progression
 - [ ] ~Secret~ dialogs
     - [ ] make the dialog system
