@@ -62,8 +62,9 @@ class OverlayHolder(RelativeLayout):
 
     def restartTimer(self):
         self.currentTime = 0
+        if self.timerInterval is not None:
+            self.timerInterval.release() # stopping the timer if your die or win
         self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
-        print("timer restarted")
 
 class HelpersLayout(BoxLayout):
     # NOTE: the resize functionality on this guy, and
