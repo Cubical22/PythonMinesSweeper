@@ -75,34 +75,38 @@ OverlayHolder:
         Rectangle:
             pos: self.pos
             size: self.size
-    Label:
-        text: "you have lost"
-        id: popupText
-        pos: 0 ,self.parent.height - self.height
-        size_hint: None, None
-        height: dp(80)
-        width: self.parent.width
-        font_size: dp(40)
 
-    Label:
-        text: "time: {}"
-        id: timeText
-        pos: 0 ,self.parent.height - self.height - self.parent.ids.popupText.height
-        size_hint: None, None
-        height: dp(80)
-        width: self.parent.width
-        font_size: dp(40)
+    BoxLayout:
+        size_hint: 1, 1
+        orientation: "vertical"
+        pos: self.pos[0], root.height / 2 - self.height
 
-    Button:
-        text: "restart"
-        id: restartButton
-        pos: self.parent.width/2 - self.width/2 ,self.parent.height - self.height - self.parent.ids.popupText.height - self.parent.ids.timeText.height - dp(30)
-        size_hint: None, None
-        height: dp(80)
-        width: max(self.parent.width / 2, dp(200))
-        font_size: dp(40)
+        Label:
+            text: "you have lost"
+            id: popupText
+            size_hint: None, None
+            height: dp(80)
+            width: root.width
+            font_size: dp(40)
 
-        on_press: self.parent.restartGame()
+        Label:
+            text: "time: {}"
+            id: timeText
+            size_hint: None, None
+            height: dp(80)
+            width: root.width
+            font_size: dp(40)
+
+        Button:
+            text: "restart"
+            id: restartButton
+            size_hint: None, None
+            height: dp(80)
+            width: max(root.width / 2, dp(200))
+            font_size: dp(40)
+            pos: root.width / 2 - self.width / 2, self.pos[1]
+
+            on_press: root.restartGame()
 
 <MainLayout>:
     massage_label:massage_label
