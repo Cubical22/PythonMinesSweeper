@@ -32,6 +32,10 @@ OverlayHolder:
         Rectangle:
             pos: self.pos
             size: self.size
+    Button:
+        background_color: 0,0,0,0
+        background_normal: ""
+        on_press: root.updateStateOnClick()
 
 
 <HelperButtonHolder@RelativeLayout>:

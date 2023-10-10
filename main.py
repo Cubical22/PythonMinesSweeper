@@ -69,9 +69,16 @@ class OverlayHolder(RelativeLayout):
 class DialogModal(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.disabled = False # note that here setting the disabled to True seems to make this act as a blocker
-        # I might take advantage of that
         self.opacity = 0
+
+    def updateStateOnClick(self): # this function is used to make the dialog modal act as the dialog requires
+        self.opacity = 0
+
+    def on_touch_down(self, touch):
+        if self.opacity == 0: # the modal is not enabled or in the middle of any action
+            super().on_touch_down(touch)
+        else:
+            return super().on_touch_down(touch) # the invisible button being pressed right here
 
 class HelpersLayout(BoxLayout):
     # NOTE: the resize functionality on this guy, and
