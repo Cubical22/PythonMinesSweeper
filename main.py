@@ -66,6 +66,13 @@ class OverlayHolder(RelativeLayout):
             self.timerInterval.release() # stopping the timer if your die or win
         self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
 
+class DialogModal(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.disabled = False # note that here setting the disabled to True seems to make this act as a blocker
+        # I might take advantage of that
+        self.opacity = 0
+
 class HelpersLayout(BoxLayout):
     # NOTE: the resize functionality on this guy, and
     # possibly everything else in this app, is handled on MainLayout

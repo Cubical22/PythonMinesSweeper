@@ -22,6 +22,17 @@ OverlayHolder:
         size_hint: 1,1
         opacity: 0
         disabled: True
+    DialogModal:
+
+<DialogModal>:
+    size_hint: 1, 1
+    canvas.after:
+        Color:
+            rgba: 0.1,0.1,0.1,0.3
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 
 <HelperButtonHolder@RelativeLayout>:
     passing_text: "N/A"
