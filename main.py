@@ -67,12 +67,30 @@ class OverlayHolder(RelativeLayout):
         self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
 
 class DialogModal(BoxLayout):
+    currentDialogSet = [
+        "oh, hello there",
+        "wasn't expecting anyone to find me here",
+        "glad there's some company though",
+        "...",
+        "alright then, not really talkative are you?",
+        "see you around :)"
+    ]
+
+    currentDialogIndex = 0
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.opacity = 0
+        self.opacity = 1
 
     def updateStateOnClick(self): # this function is used to make the dialog modal act as the dialog requires
-        self.opacity = 0
+        if self.opacity == 0:
+            return
+        if self.currentDialogIndex >= len(self.currentDialogSet):
+            self.opacity = 0
+        else:
+            print(self.currentDialogSet[self.currentDialogIndex])
+            # TODO: change this print statement to actually showing up inside the screen
+            self.currentDialogIndex+=1
 
     def on_touch_down(self, touch):
         if self.opacity == 0: # the modal is not enabled or in the middle of any action
