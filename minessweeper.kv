@@ -28,7 +28,7 @@ OverlayHolder:
     size_hint: 1, 1
     canvas.after:
         Color:
-            rgba: 0.1,0.1,0.1,0.3
+            rgba: 0.1,0.1,0.1,0.4
         Rectangle:
             pos: self.pos
             size: self.size
@@ -36,6 +36,26 @@ OverlayHolder:
         background_color: 0,0,0,0
         background_normal: ""
         on_press: root.updateStateOnClick()
+
+        size_hint: None, None
+        size: root.width, root.height
+    Widget:
+        size_hint: None, None
+        width: root.width - dp(60)
+        height: dp(100)
+        pos: root.width / 2 - self.width / 2, root.height - self.height - dp(30)
+        canvas.before:
+            Color:
+                rgba: 0.1,0.1,0.2,0.9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: dialogLabel
+            pos: self.parent.pos
+            size: self.parent.size
+            text: "this is a great idea"
+
 
 
 <HelperButtonHolder@RelativeLayout>:

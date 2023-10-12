@@ -66,7 +66,7 @@ class OverlayHolder(RelativeLayout):
             self.timerInterval.release() # stopping the timer if your die or win
         self.timerInterval = Clock.schedule_interval(self.addToTime, 1/60)
 
-class DialogModal(BoxLayout):
+class DialogModal(Widget):
     currentDialogSet = [
         "oh, hello there",
         "wasn't expecting anyone to find me here",
@@ -89,7 +89,7 @@ class DialogModal(BoxLayout):
             self.opacity = 0
         else:
             print(self.currentDialogSet[self.currentDialogIndex])
-            # TODO: change this print statement to actually showing up inside the screen
+            self.ids.dialogLabel.text = self.currentDialogSet[self.currentDialogIndex]
             self.currentDialogIndex+=1
 
     def on_touch_down(self, touch):
