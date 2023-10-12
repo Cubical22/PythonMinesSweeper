@@ -88,9 +88,11 @@ class DialogModal(Widget):
         if self.currentDialogIndex >= len(self.currentDialogSet):
             self.opacity = 0
         else:
-            print(self.currentDialogSet[self.currentDialogIndex])
             self.ids.dialogLabel.text = self.currentDialogSet[self.currentDialogIndex]
             self.currentDialogIndex+=1
+
+        # TODO: add event to these dialogs
+        # TODO: add animation to these dialogs
 
     def on_touch_down(self, touch):
         if self.opacity == 0: # the modal is not enabled or in the middle of any action
