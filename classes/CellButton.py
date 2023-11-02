@@ -5,7 +5,7 @@ from abilities.cellReveal import cellReveal
 
 from kivy.app import App
 import random
-from globalVal import DIALOG_POSSIBILITY
+from globalVal import DIALOG_POSSIBILITY, DIALOG_CELL_COLOR
 
 class CellButton(Button):
     xIndex = 0
@@ -81,3 +81,4 @@ class CellButton(Button):
             modal.activateDialogModal(["hello", "this seems to be working"])
             # the function does the rest of the stuff itself
             App.get_running_app().isInsideDialog = True
+            self.background_color = DIALOG_CELL_COLOR
