@@ -80,7 +80,7 @@ class DialogModal(Widget):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.opacity = 1
+        self.opacity = 0
 
     def updateStateOnClick(self): # this function is used to make the dialog modal act as the dialog requires
         if self.opacity == 0:
@@ -99,6 +99,12 @@ class DialogModal(Widget):
             super().on_touch_down(touch)
         else:
             return super().on_touch_down(touch) # the invisible button being pressed right here
+
+    def activateDialogModal(self, dialog_list):
+        self.currentDialogSet = dialog_list
+        self.currentDialogIndex = 0
+        self.opacity = 1
+        self.ids.dialogLabel.text = self.currentDialogSet[0]
 
 class HelpersLayout(BoxLayout):
     # NOTE: the resize functionality on this guy, and
