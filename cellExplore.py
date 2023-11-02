@@ -1,5 +1,6 @@
 from globalVal import *
 from utils import checkInsideLength
+from kivy.app import App
 
 
 def exploreFromStart(cellX, cellY):  # this function handles the exploration of cells that have an adj count > 0
@@ -41,5 +42,8 @@ def exploreWithOffset(cellPos, offX, offY):
 
     if cell.adjBombCount != 0:
         cell.callCell()
+
+    if not App.get_running_app().isInsideDialog:
+        cell.checkDialog() # the possibility is calculated inside the button
 
     return cell.adjBombCount == 0

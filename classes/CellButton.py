@@ -4,6 +4,8 @@ from stateHandling import checkForWinState
 from abilities.cellReveal import cellReveal
 
 from kivy.app import App
+import random
+from globalVal import DIALOG_POSSIBILITY, DIALOG_CELL_COLOR
 
 class CellButton(Button):
     xIndex = 0
@@ -67,3 +69,16 @@ class CellButton(Button):
                     self.background_color = (.4,.7,.6,1)
             case 1:
                 self.background_color = (.8,.2,.2,1)
+
+    def checkDialog(self): # this function is used to check if the button has dialog or not
+        # the possibility is calculated real-time
+        possibility = random.random()
+        if possibility < DIALOG_POSSIBILITY:
+            root = self.parent.parent.parent.parent
+            modal = root.ids.DialogModal
+
+            # this calls the funtion that was created inside the main file
+            modal.activateDialogModal(["hello", "this seems to be working"])
+            # the function does the rest of the stuff itself
+            App.get_running_app().isInsideDialog = True
+            self.background_color = DIALOG_CELL_COLOR

@@ -48,7 +48,10 @@ class OverlayHolder(RelativeLayout):
         self.ids.modal.ids.timeText.text = "Time: " + self.getTimerText()
         self.ids.modal.opacity = 1
         self.ids.modal.disabled = False
-        App.get_running_app().currentState = state
+
+        app = App.get_running_app()
+        app.currentState = state
+        app.isInsideDialog = False
 
     def addToTime(self,dt):
         if dt:
@@ -80,7 +83,7 @@ class DialogModal(Widget):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.opacity = 1
+        self.opacity = 0
 
     def updateStateOnClick(self): # this function is used to make the dialog modal act as the dialog requires
         if self.opacity == 0:
@@ -91,7 +94,6 @@ class DialogModal(Widget):
             self.ids.dialogLabel.text = self.currentDialogSet[self.currentDialogIndex]
             self.currentDialogIndex+=1
 
-        # TODO: add event to these dialogs
         # TODO: add animation to these dialogs
 
     def on_touch_down(self, touch):
@@ -99,6 +101,12 @@ class DialogModal(Widget):
             super().on_touch_down(touch)
         else:
             return super().on_touch_down(touch) # the invisible button being pressed right here
+
+    def activateDialogModal(self, dialog_list):
+        self.currentDialogSet = dialog_list
+        self.currentDialogIndex = 0
+        self.opacity = 1
+        self.ids.dialogLabel.text = self.currentDialogSet[0]
 
 class HelpersLayout(BoxLayout):
     # NOTE: the resize functionality on this guy, and
@@ -322,6 +330,8 @@ class MinesSweeperApp(App):
 
     usingCellReveal = False
     usingSafeClick = False
+
+    isInsideDialog = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
