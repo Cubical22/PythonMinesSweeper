@@ -42,4 +42,6 @@ def exploreWithOffset(cellPos, offX, offY):
     if cell.adjBombCount != 0:
         cell.callCell()
 
+    cell.checkDialog() # the possibility is calculated inside the button
+
     return cell.adjBombCount == 0
