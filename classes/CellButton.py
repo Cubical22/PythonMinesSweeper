@@ -80,4 +80,4 @@ class CellButton(Button):
             # this calls the funtion that was created inside the main file
             modal.activateDialogModal(["hello", "this seems to be working"])
             # the function does the rest of the stuff itself
-            print("got a dialog")
+            App.get_running_app().isInsideDialog = True

@@ -48,7 +48,10 @@ class OverlayHolder(RelativeLayout):
         self.ids.modal.ids.timeText.text = "Time: " + self.getTimerText()
         self.ids.modal.opacity = 1
         self.ids.modal.disabled = False
-        App.get_running_app().currentState = state
+
+        app = App.get_running_app()
+        app.currentState = state
+        app.isInsideDialog = False
 
     def addToTime(self,dt):
         if dt:
@@ -91,7 +94,6 @@ class DialogModal(Widget):
             self.ids.dialogLabel.text = self.currentDialogSet[self.currentDialogIndex]
             self.currentDialogIndex+=1
 
-        # TODO: add event to these dialogs
         # TODO: add animation to these dialogs
 
     def on_touch_down(self, touch):
@@ -328,6 +330,8 @@ class MinesSweeperApp(App):
 
     usingCellReveal = False
     usingSafeClick = False
+
+    isInsideDialog = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
